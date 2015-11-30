@@ -1,5 +1,6 @@
 #include <iostream>
 #include <stdio.h>
+#include <regex.h>
 #include "Credito.h"
 using namespace std;
 
@@ -11,7 +12,7 @@ void Credito::crearRaiz(Credito *&raiz, long int d){
 	do{
 		cout<<"fecha de nacimiento(DD/MM/AAAA): ";
 		scanf(" %[^\n]", raiz->fecha_nac);
-	}while();
+	}while(validar_fecha(raiz->fecha_nac));
 	cout<<"salario: ";
 	scanf("%f", &raiz->salario);
 	cout<<"estado civil: ";
@@ -21,7 +22,7 @@ void Credito::crearRaiz(Credito *&raiz, long int d){
 	do{
 		cout<<"fecha del préstamo(DD/MM/AAAA): ";
 		scanf(" %[^\n]", raiz->fecha_Credito);
-	}while();
+	}while(validar_fecha(raiz->fecha_Credito));
 	cout<<"duración del préstamo(en meses): ";
 	scanf("%d", &raiz->duracion_Credito);
 	cout<<"tipo de crédito:";
@@ -33,6 +34,32 @@ void Credito::insIzq(Credito *&aux, long int d){
 }
 void Credito::insDer(Credito *&aux, long int d){
 	crearRaiz(aux->der, d);
+}
+int validar_fecha(char a[]){
+	regex_t regex;
+	int reti;
+	char msgbuf[100];	
+
+	/* Compile regular expression */
+	reti = regcomp(&regex, "[0-9][0-9]/[0-9][0-9]/[0-9][0-9][0-9][0-9]", 0);
+	if (reti) {
+		fprintf(stderr, "Could not compile regex\n");
+		//exit(1);
+	}
+
+	/* Execute regular expression */
+	reti = regexec(&regex, a, 0, NULL, 0);
+	if (!reti) {
+		return 0;
+	}
+	else if (reti == REG_NOMATCH) {
+		retrun 1;
+	}
+	else {
+		regerror(reti, &regex, msgbuf, sizeof(msgbuf));
+		fprintf(stderr, "Regex match failed: %s\n", msgbuf);
+	}
+	regfree(&regex);
 }
 void Credito::crearArbol(Credito *&raiz){
 	Credito *aux1, *aux2;
