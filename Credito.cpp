@@ -8,16 +8,20 @@ void Credito::crearRaiz(Credito *&raiz, long int d){
 	raiz->id = d;
 	cout<<"ingrese nombre: ";
 	scanf(" %[^\n]", raiz->nombre);
-	cout<<"fecha de nacimiento(DD/MM/AAAA): ";
-	scanf(" %[^\n]", raiz->fecha_nac);
+	do{
+		cout<<"fecha de nacimiento(DD/MM/AAAA): ";
+		scanf(" %[^\n]", raiz->fecha_nac);
+	}while();
 	cout<<"salario: ";
 	scanf("%f", &raiz->salario);
 	cout<<"estado civil: ";
 	scanf(" %[^\n]", raiz->estado_civil);
 	cout<<"valor Credito: ";
 	scanf("%f", &raiz->valor_Credito);
-	cout<<"fecha del préstamo: ";
-	scanf(" %[^\n]", raiz->fecha_Credito);
+	do{
+		cout<<"fecha del préstamo(DD/MM/AAAA): ";
+		scanf(" %[^\n]", raiz->fecha_Credito);
+	}while();
 	cout<<"duración del préstamo(en meses): ";
 	scanf("%d", &raiz->duracion_Credito);
 	cout<<"tipo de crédito:";
@@ -107,4 +111,53 @@ void Credito::eliminarXId(Credito *&raiz, long int id){
 		eliminarXId(raiz->der, id);
 	}
 }
-	
+void Credito::mostrarMaxMin(Credito *&raiz){
+	float *max, *min;
+	max=min=&raiz->valor_Credito;
+	maxMin(raiz, max, min);
+	cout<<"El valor maximo es: "<<*max<<endl;
+	cout<<"El valor minimo es: "<<*min<<endl;
+}
+void Credito::maxMin(Credito *&raiz, float *&max, float *&min){
+	/*
+	*Verifica el maximo y el minimo de la estructura
+	*
+	*/
+	if(raiz->valor_Credito > *max)
+		max = &raiz->valor_Credito;
+	if(raiz->valor_Credito < *min)
+		min = &raiz->valor_Credito;
+	if(raiz->izq)
+		maxMin(raiz->izq, max, min);
+	if(raiz->der)
+		maxMin(raiz->der, max, min);
+}
+void Credito::edadCliente(Credito *raiz, long int id){
+	if(raiz->id == id){
+		cout<<"el cliente tiene "
+	}
+	if(raiz->izq)
+		edadCliente(raiz->izq, id);
+	if(raiz->der)
+		edadCliente(raiz->der, id);
+}
+void Credito::estadoCivilCliente(Credito *raiz, long int id){
+	if(raiz->id == id){
+		cout<<raiz->nombre<<" es "<<raiz->estado_civil;
+	}
+	if(raiz->izq)
+		estadoCivilCliente(raiz->izq, id);
+	if(raiz->der)
+		estadoCivilCliente(raiz->der, id);
+}
+void Credito::tipoCreditoCliente(Credito *raiz, long int id){
+	if(raiz->id == id){
+		cout<<"El tipo de credito de "<<raiz->nombre<<" es "<<raiz->tipo_credito;
+	}
+	if(raiz->izq)
+		estadoCivilCliente(raiz->izq, id);
+	if(raiz->der)
+		estadoCivilCliente(raiz->der, id);
+
+}
+

@@ -19,5 +19,10 @@ class Credito{
 		void crearArbol(Credito *&);
 		void mostrar(Credito *);
 		void eliminarXId(Credito *&, long int);
+		void mostrarMaxMin(Credito *&);
+		void maxMin(Credito *&, float *&, float *&);
+		void edadCliente(Credito *, long int);
+		void estadoCivilCliente(Credito *, long int);
+		void tipoCreditoCliente(Credito *, long int);
 };
 #endif
